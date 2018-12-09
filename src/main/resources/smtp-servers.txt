@@ -1,0 +1,13 @@
+Gmail:
+	ssl: true
+	hostname: "smtp.googlemail.com"
+	port: 465
+Outlook/Hotmail:
+	ssl: false
+	tls: true
+	hostname: "smtp.live.com"
+	port: 587
+Yahoo Mail:
+	hostname: smtp.mail.yahoo.com
+	ssl: true
+    port: 465

@@ -1,0 +1,20 @@
+main: "me.roinujnosde.wantednotification.WantedNotification"
+name: "WantedNotification"
+author: "RoinujNosde"
+version: 1.0.0
+permissions:
+    wantednotification.alert:
+        default: op
+        description: "Allows you to receive the notification."
+    wantednotification.remove:
+        default: op
+    wantednotification.add:
+        default: op
+    wantednotification.list:
+        default: op
+    wantednotification.help:
+        default: true
+commands:
+    wantednotification:
+        aliases: [wn, wanted]
+        usage: "§cPlease, use /<command> help to know the proper usage."
