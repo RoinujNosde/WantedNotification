@@ -33,26 +33,33 @@ import me.roinujnosde.wantednotification.WantedNotification;
  */
 public class WantedManager {
 
-    private ConfigManager configManager;
+    private final WantedNotification plugin;
+    private final ConfigManager configManager;
 
     public WantedManager(WantedNotification plugin) {
         this.configManager = new ConfigManager(plugin);
+        this.plugin = plugin;
     }
 
     public boolean isWanted(UUID uuid) {
-        if (configManager.getWantedList().contains(uuid)) {
+        if (configManager.getWantedMap().containsKey(uuid)) {
             return true;
         }
         return false;
     }
+    
+    public String getReason(UUID uuid) {
+        String reason = configManager.getWantedMap().get(uuid);
+        return reason != null ? reason : plugin.getLang("no-reason");
+    }
 
-    public void add(UUID uuid) {
-        configManager.getWantedList().add(uuid);
+    public void add(UUID uuid, String reason) {
+        configManager.getWantedMap().put(uuid, reason);
         configManager.save();
     }
 
     public void remove(UUID uuid) {
-        configManager.getWantedList().remove(uuid);
+        configManager.getWantedMap().remove(uuid);
         configManager.save();
     }
 }

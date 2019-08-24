@@ -58,7 +58,12 @@ public class AddCommand extends WNCommand {
 					sender.sendMessage(plugin.getLang("already-wanted"));
 					return true;
 				}
-				wm.add(player.getUniqueId());
+                                String reason = plugin.getLang("no-reason");
+                                if (args.length >= 3) {
+                                    reason = args[2];
+                                }
+                                
+				wm.add(player.getUniqueId(), reason);
 				sender.sendMessage(plugin.getLang("added"));
 			} else {
 				sender.sendMessage(plugin.getLang("no-permission"));

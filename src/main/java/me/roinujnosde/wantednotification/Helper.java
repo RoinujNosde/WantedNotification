@@ -24,7 +24,9 @@
 package me.roinujnosde.wantednotification;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -50,6 +52,16 @@ public class Helper {
         stringList.forEach(str -> uuidList.add(UUID.fromString(str))
         );
         return uuidList;
+    }
+
+    public static Map<UUID, String> stringMapToUUIDMap(Map<String, Object> values) {
+        Map<UUID, String> map = new HashMap<>();
+        if (values != null) {
+            values.forEach((s, o) -> {
+                map.put(UUID.fromString(s), (String) o);
+            });
+        }
+        return map;
     }
 
 }

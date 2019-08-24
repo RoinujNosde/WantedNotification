@@ -24,10 +24,11 @@
 package me.roinujnosde.wantednotification.commands;
 
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import me.roinujnosde.wantednotification.WantedNotification;
 import me.roinujnosde.wantednotification.managers.ConfigManager;
+import me.roinujnosde.wantednotification.managers.WantedManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -38,19 +39,23 @@ import org.bukkit.command.CommandSender;
 public class ListCommand extends WNCommand {
 
 	private final ConfigManager cm;
+        private final WantedManager wm;
 
 	public ListCommand(WantedNotification plugin, CommandSender sender, String[] args) {
 		super(plugin, sender, args);
 		this.cm = new ConfigManager(plugin);
+                this.wm = new WantedManager(plugin);
 	}
 
 	@Override
 	public boolean run() {
 		if (sender.hasPermission("wantednotification.list")) {
-			List<UUID> wantedList = cm.getWantedList();
+			Set<UUID> wantedList = cm.getWantedMap().keySet();
 			sender.sendMessage(MessageFormat.format(plugin.getLang("list-title"), wantedList.size()));
 			wantedList.forEach(uuid -> sender
-					.sendMessage(plugin.getLang("list-line").replaceAll("@player", Bukkit.getPlayer(uuid).getName())));
+					.sendMessage(plugin.getLang("list-line")
+                                                .replace("@player", Bukkit.getPlayer(uuid).getName())
+                                                .replace("@reason", wm.getReason(uuid))));
 		} else {
 			sender.sendMessage(plugin.getLang("no-permission"));
 		}

@@ -24,10 +24,12 @@
 package me.roinujnosde.wantednotification.managers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import me.roinujnosde.wantednotification.Helper;
 import me.roinujnosde.wantednotification.WantedNotification;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -50,8 +52,8 @@ public class ConfigManager {
     private String emailMessage;
     private List<String> emailReceivers;
     private boolean debug;
-    private List<UUID> wantedList;
-
+    private Map<UUID, String> wantedList;
+    
     public ConfigManager(WantedNotification plugin) {
         this.plugin = Objects.requireNonNull(plugin);
         load();
@@ -60,7 +62,12 @@ public class ConfigManager {
     public void load() {
         FileConfiguration config = plugin.getConfig();
         debug = config.getBoolean("debug");
-        wantedList = Helper.stringListToUUIDList(config.getStringList("wanted-list"));
+        ConfigurationSection wlSection = config.getConfigurationSection("wanted-list");
+        if (wlSection == null) {
+            wlSection = config.createSection("wanted-list");
+        }
+        wantedList = Helper.stringMapToUUIDMap(wlSection.getValues(false));
+        
         emailEnabled = config.getBoolean("email.enabled");
         emailUseSsl = config.getBoolean("email.use-ssl");
         emailUseTls = config.getBoolean("email.use-tls");
@@ -75,7 +82,7 @@ public class ConfigManager {
     }
 
     public void save() {
-        plugin.getConfig().set("wanted-list", Helper.uuidListToStringList(wantedList));
+        plugin.getConfig().createSection("wanted-list", wantedList);
         plugin.saveConfig();
     }
 
@@ -83,7 +90,7 @@ public class ConfigManager {
         return debug;
     }
 
-    public List<UUID> getWantedList() {
+    public Map<UUID, String> getWantedMap() {
         return wantedList;
     }
 

@@ -15,7 +15,7 @@ email:
     - "leopardowner@outlook.com"
 
 #Do not edit manually, use the commands
-wanted-list: []
+wanted-list:
 
 #Send more output to the console?
 debug: false
@@ -23,7 +23,7 @@ debug: false
 #Help command
 help-command:
 - "&a[WantedNotification] Help:"
-- "&a/wn add <player> - adds a player to the wanted list"
+- "&a/wn add <player> [reason] - adds a player to the wanted list"
 - "&a/wn remove <player> - removes a player from the wanted list"
 - "&a/wn list - lists the wanted players"
 - "&a/wn help - shows this help"
@@ -38,4 +38,5 @@ language:
     invalid-player: "&a[WantedNotification] This is not a valid player!"
     alert: "&a[WantedNotification] {0} has joined the server!"
     list-title: "&a[WantedNotification] Wanted List (total: {0})"
-    list-line: "&a@player"
+    list-line: "&a@player - @reason"
+    no-reason: "No reason"

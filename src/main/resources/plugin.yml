@@ -1,7 +1,7 @@
 main: "me.roinujnosde.wantednotification.WantedNotification"
 name: "WantedNotification"
 author: "RoinujNosde"
-version: 1.0.0
+version: 1.1.0
 permissions:
     wantednotification.alert:
         default: op
